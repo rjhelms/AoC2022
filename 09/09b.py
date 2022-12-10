@@ -13,6 +13,37 @@ def manhattan_distance(pos1, pos2):
     return x + y
 
 
+def do_move(knots, set_tail_pos, dir):
+    match dir:
+        case "L":
+            knots[0][0] -= 1
+        case "R":
+            knots[0][0] += 1
+        case "U":
+            knots[0][1] -= 1
+        case "D":
+            knots[0][1] += 1
+
+    for i in range(0, 9):
+        if (
+            largest_distance(knots[i], knots[i + 1]) >= 2
+            or manhattan_distance(knots[i], knots[i + 1]) > 2
+        ):
+            x_mag = knots[i][0] - knots[i + 1][0]
+            y_mag = knots[i][1] - knots[i + 1][1]
+
+            if x_mag > 0:
+                knots[i + 1][0] += 1
+            if x_mag < 0:
+                knots[i + 1][0] -= 1
+            if y_mag > 0:
+                knots[i + 1][1] += 1
+            if y_mag < 0:
+                knots[i + 1][1] -= 1
+
+    set_tail_pos.add(tuple(knots[-1]))
+
+
 if __name__ == "__main__":
     knots = []
     for i in range(10):  # head and 9 tails, 1-9
@@ -25,33 +56,6 @@ if __name__ == "__main__":
             dir, dist = line.split()
             dist = int(dist)
             for _ in range(dist):
-                match dir:
-                    case "L":
-                        knots[0][0] -= 1
-                    case "R":
-                        knots[0][0] += 1
-                    case "U":
-                        knots[0][1] -= 1
-                    case "D":
-                        knots[0][1] += 1
-
-                for i in range(0, 9):
-                    if (
-                        largest_distance(knots[i], knots[i + 1]) >= 2
-                        or manhattan_distance(knots[i], knots[i + 1]) > 2
-                    ):
-                        x_mag = knots[i][0] - knots[i + 1][0]
-                        y_mag = knots[i][1] - knots[i + 1][1]
-
-                        if x_mag > 0:
-                            knots[i + 1][0] += 1
-                        if x_mag < 0:
-                            knots[i + 1][0] -= 1
-                        if y_mag > 0:
-                            knots[i + 1][1] += 1
-                        if y_mag < 0:
-                            knots[i + 1][1] -= 1
-
-                set_tail_pos.add(tuple(knots[-1]))
+                do_move(knots, set_tail_pos, dir)
 
     print(len(set_tail_pos))
