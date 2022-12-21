@@ -1,9 +1,11 @@
-from collections import defaultdict
 from time import perf_counter
+import multiprocessing
 
 IN_FILE = "15/input.txt"
 
 MAX_COORD = 4000000
+
+hidden_sensor_position = None
 
 
 class Sensor:
@@ -71,6 +73,13 @@ def perimiter_walk(sensor: Sensor, sensor_list: list):
     return None
 
 
+# callback for perimiter walk
+def result_callback(result):
+    global hidden_sensor_position
+    if result:
+        hidden_sensor_position = result
+
+
 if __name__ == "__main__":
     start_time = perf_counter()
     sensors = []
@@ -89,11 +98,22 @@ if __name__ == "__main__":
                 Sensor(sensor_position, calculate_manhattan(sensor_position, beacon))
             )
 
-    for sensor in sensors:
-        result = perimiter_walk(sensor, sensors)
-        if result:
-            print(result, result[0] * 4000000 + result[1])
-            break
+    # do perimiter walk with multiprocessing
+    pool = multiprocessing.Pool()
+    returned = [
+        pool.apply_async(
+            perimiter_walk, args=(sensor, sensors), callback=result_callback
+        )
+        for sensor in sensors
+    ]
 
+    # just spin until a callback has a result
+    while not hidden_sensor_position:
+        pass
+
+    pool.terminate()
+    pool.close()
+
+    print(hidden_sensor_position[0] * 4000000 + hidden_sensor_position[1])
     end_time = perf_counter()
     print(f"Execution time: {end_time-start_time:.2f}s")
