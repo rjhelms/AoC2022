@@ -1,6 +1,9 @@
+from time import perf_counter
 IN_FILE = "04/input.txt"
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     with open(IN_FILE) as f:
         overlap = 0
         for line in f:
@@ -11,3 +14,6 @@ if __name__ == "__main__":
                 overlap += 1
 
     print(overlap)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

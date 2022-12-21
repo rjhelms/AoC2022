@@ -1,4 +1,5 @@
 import math
+from time import perf_counter
 
 IN_FILE = "12/input.txt"
 
@@ -27,6 +28,8 @@ class Node:
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     start_node = None
     end_node = None
     node_dict = {}
@@ -65,3 +68,6 @@ if __name__ == "__main__":
         unvisited_set.remove(current_node)
 
     print(unvisited_set[0].distance)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

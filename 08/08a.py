@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "08/input.txt"
 
 
@@ -9,6 +11,8 @@ def check_direction(height, list):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     grid = []
     with open(IN_FILE) as f:
         for line in f:
@@ -52,3 +56,6 @@ if __name__ == "__main__":
             if visible:
                 total += 1
     print(total)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

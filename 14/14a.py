@@ -1,4 +1,5 @@
 from collections import defaultdict
+from time import perf_counter
 
 IN_FILE = "14/input.txt"
 
@@ -15,8 +16,8 @@ def append_tile(tiles, max_y, current):
 
 
 def do_drop(start, tiles, max_y):
-
     current = start
+
     while True:
         if not tiles[(current[0], current[1] + 1)]:
             # drop straight down
@@ -38,6 +39,8 @@ def do_drop(start, tiles, max_y):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     # parse files
     tiles = defaultdict(blank_tile)
 
@@ -72,3 +75,5 @@ if __name__ == "__main__":
         count += 1
 
     print(count)
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

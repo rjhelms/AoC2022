@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "13/input.txt"
 
 
@@ -38,6 +40,7 @@ def parse(left, right) -> bool:
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
     score = 0
     with open(IN_FILE) as f:
         text = f.readlines()
@@ -51,3 +54,5 @@ if __name__ == "__main__":
             value += 1
             print()
     print(score)
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

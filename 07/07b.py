@@ -1,4 +1,5 @@
 from enum import Enum
+from time import perf_counter
 
 IN_FILE = "07/input.txt"
 
@@ -38,6 +39,8 @@ class DirEntry:
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     all_dirs = []
     current_dir = None
     state = ParserState.INIT  # first line is gonna be creating root dir
@@ -81,3 +84,6 @@ if __name__ == "__main__":
     candidate_dirs = [x for x in all_dirs if x.get_size() >= to_free]
     candidate_dirs.sort(key=lambda x: x.get_size())
     print(candidate_dirs[0].get_size())
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

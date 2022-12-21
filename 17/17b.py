@@ -137,4 +137,4 @@ if __name__ == "__main__":
     print(f"{extra_iter} more rocks adds {highest-extra_base_height}")
     print(f"total: {height_post_full+(highest-extra_base_height-1)}")
     end_time = perf_counter()
-    print(f"Execution time: {end_time-start_time:.2f}s")
+    print(f"Execution time: {end_time-start_time:.3f}s")

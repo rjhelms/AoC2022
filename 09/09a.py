@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "09/input.txt"
 
 
@@ -43,6 +45,8 @@ def do_move(head_pos, tail_pos, set_tail_pos, dir):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     head_pos = [0, 0]
     tail_pos = [0, 0]
     set_tail_pos = set([tuple(tail_pos)])
@@ -55,3 +59,6 @@ if __name__ == "__main__":
                 do_move(head_pos, tail_pos, set_tail_pos, dir)
 
     print(len(set_tail_pos))
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

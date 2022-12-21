@@ -1,3 +1,5 @@
+from time import perf_counter
+
 from enum import Enum
 
 
@@ -9,6 +11,8 @@ class ProcState(Enum):
 IN_FILE = "10/input.txt"
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     state = ProcState.FETCH
     x_reg = 1
     cycle = 0
@@ -50,3 +54,6 @@ if __name__ == "__main__":
                 state = ProcState.FETCH
 
     print(result)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

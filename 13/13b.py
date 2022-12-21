@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "13/input.txt"
 
 
@@ -47,6 +49,8 @@ def quicksort(array, low, high):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     rows = []
     with open(IN_FILE) as f:
         text = f.readlines()
@@ -57,3 +61,6 @@ if __name__ == "__main__":
     rows.append([[6]])
     quicksort(rows, 0, len(rows) - 1)
     print((rows.index([[2]]) + 1) * (rows.index([[6]]) + 1))
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

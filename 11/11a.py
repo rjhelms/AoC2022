@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "11/input.txt"
 
 
@@ -52,6 +54,8 @@ class Monkey:
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     monkeys = []
     with open(IN_FILE) as f:
         lines = f.readlines()
@@ -71,3 +75,6 @@ if __name__ == "__main__":
     monkeys.sort(key=lambda x: x.items_handled, reverse=True)
 
     print(monkeys[0].items_handled * monkeys[1].items_handled)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

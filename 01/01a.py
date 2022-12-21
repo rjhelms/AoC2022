@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "01/input.txt"
 
 
@@ -13,6 +15,8 @@ class Elf:
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     elves = []
 
     with open(IN_FILE) as f:
@@ -28,3 +32,6 @@ if __name__ == "__main__":
     elves.sort(key=lambda x: x.total_calories(), reverse=True)
 
     print(elves[0].total_calories())
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

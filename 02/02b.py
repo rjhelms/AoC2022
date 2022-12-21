@@ -1,3 +1,5 @@
+from time import perf_counter
+
 IN_FILE = "02/input.txt"
 
 
@@ -31,6 +33,8 @@ def score_game(move):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     total_score = 0
     with open(IN_FILE) as f:
         for turn in f:
@@ -38,3 +42,6 @@ if __name__ == "__main__":
             total_score += score_game(moves)
 
     print(total_score)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

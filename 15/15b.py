@@ -116,4 +116,4 @@ if __name__ == "__main__":
 
     print(hidden_sensor_position[0] * 4000000 + hidden_sensor_position[1])
     end_time = perf_counter()
-    print(f"Execution time: {end_time-start_time:.2f}s")
+    print(f"Execution time: {end_time-start_time:.3f}s")

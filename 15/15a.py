@@ -56,4 +56,4 @@ if __name__ == "__main__":
 
     print(count)
     end_time = perf_counter()
-    print(f"Execution time: {end_time-start_time:.2f}s")
+    print(f"Execution time: {end_time-start_time:.3f}s")

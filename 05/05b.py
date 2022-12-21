@@ -1,4 +1,5 @@
 from enum import Enum
+from time import perf_counter
 
 IN_FILE = "05/input.txt"
 
@@ -9,6 +10,8 @@ class ParsingState(Enum):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     state = ParsingState.INITIAL
     stack_count = 0
     stacks = []
@@ -39,3 +42,6 @@ if __name__ == "__main__":
     for stack in stacks:
         answer += stack[-1]
     print(answer)
+
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")

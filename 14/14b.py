@@ -1,4 +1,5 @@
 from collections import defaultdict
+from time import perf_counter
 
 IN_FILE = "14/input.txt"
 
@@ -38,6 +39,8 @@ def do_drop(start, tiles, max_y):
 
 
 if __name__ == "__main__":
+    start_time = perf_counter()
+
     # parse files
     tiles = defaultdict(blank_tile)
 
@@ -75,3 +78,5 @@ if __name__ == "__main__":
         count += 1
 
     print(count)
+    end_time = perf_counter()
+    print(f"Execution time: {end_time-start_time:.3f}s")
