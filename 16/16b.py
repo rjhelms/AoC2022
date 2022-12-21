@@ -1,6 +1,6 @@
 import math
-import itertools
 from time import perf_counter
+import multiprocessing
 
 IN_FILE = "16/input.txt"
 
@@ -87,6 +87,24 @@ def walk_path(all_nodes, pump_nodes, start_node, time, flow, total_flow):
     return best_flow
 
 
+def walk_split(all_nodes, pump_nodes, items, i):
+    human_nodes = {}
+    elephant_nodes = {}
+    # using i as bitmask, assign nodes to either path
+    for j in range(len(pump_nodes)):
+        item = items[j]
+        if i & 1:
+            human_nodes[item[0]] = item[1]
+        else:
+            elephant_nodes[item[0]] = item[1]
+        i >>= 1
+
+        # walk both paths and compare to best score
+    score = walk_path(all_nodes, human_nodes, "AA", 0, 0, 0)
+    score += walk_path(all_nodes, elephant_nodes, "AA", 0, 0, 0)
+    return score
+
+
 if __name__ == "__main__":
     start_time = perf_counter()
 
@@ -124,26 +142,20 @@ if __name__ == "__main__":
 
     items = list(pump_nodes.items())
 
-    # binary counting - all the ways to split list in two
-    # (only need to check half the combinations - other half is equivalent)
-    for i in range(1 << (len(pump_nodes) - 1)):
-        human_nodes = {}
-        elephant_nodes = {}
-        # using i as bitmask, assign nodes to either path
-        for j in range(len(pump_nodes)):
-            item = items[j]
-            if i & 1:
-                human_nodes[item[0]] = item[1]
-            else:
-                elephant_nodes[item[0]] = item[1]
-            i >>= 1
+    # binary search with multiprocessing - on my machine, reduced execution time by 80%
+    # still only need to check half the space as other half is equivalent
+    pool = multiprocessing.Pool()
+    results = [
+        pool.apply_async(walk_split, args=(all_nodes, pump_nodes, items, i))
+        for i in range(1 << len(pump_nodes) - 1)
+    ]
+    pool.close()
+    pool.join()
 
-        # walk both paths and compare to best score
-        score = walk_path(all_nodes, human_nodes, "AA", 0, 0, 0)
-        score += walk_path(all_nodes, elephant_nodes, "AA", 0, 0, 0)
-        if score > best_score:
-            best_score = score
+    # get scores from all the processes, and find best one
+    scores = [x.get() for x in results]
+    scores.sort(reverse=True)
+    print(scores[0])
 
-    print(best_score)
     end_time = perf_counter()
     print(f"Execution time: {end_time-start_time:.2f}s")
