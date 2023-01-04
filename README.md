@@ -21,5 +21,6 @@ Advent of Code 2022 solutions
 | 17   | Dec 21, 2:37p  | 0.017s | 0.024s |      |
 | 18   | Dec 21, 4:55p  | 0.006s | 0.044s |      |
 | 19   | Dec 23, 3:48p  | 6.648s | 47.00s |      |
+| 20   | Jan 3, 11:54p  | 1.450s | 14.31s |      |
 
 Times in *italics* indicate a significant improvement from refactoring after the puzzle was completed and submitted.
